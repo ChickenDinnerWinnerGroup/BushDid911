@@ -150,7 +150,7 @@ public class Manager implements UserManager, ResourceManager{
 							dvd.getLanguage()+"', '"+subtitles+"', '"+dvd.getThumbnail()+"', '"+
 							copies+"', '"+reserveQueue+"')");
 				} catch (SQLException e) {
-					System.out.println("An error occured attempting to add a dvd to the database!!!");
+					System.out.println("An error occured attempting to add a dvd to the database!");
 					e.printStackTrace();
 					return;
 				}
@@ -171,7 +171,7 @@ public class Manager implements UserManager, ResourceManager{
 							book.getISBN()+"', '"+book.getLanguage()+"', '"+book.getPublisher()+"', '"+book.getThumbnail()+"', '"+
 							copies+"', '"+reserveQueue+"')");
 				} catch (SQLException e) {
-					System.out.println("An error occured attempting to add a book to the database!!!");
+					System.out.println("An error occured attempting to add a book to the database!");
 					e.printStackTrace();
 					return;
 				}
@@ -191,7 +191,7 @@ public class Manager implements UserManager, ResourceManager{
 							laptop.getYear()+"', '"+laptop.getModel()+"', '"+laptop.getOS()+"', '"+
 							laptop.getManufacturer()+"', '"+laptop.getThumbnail()+"', '"+copies+"', '"+reserveQueue+"')");
 				} catch (SQLException e) {
-					System.out.println("An error occured attempting to add a laptop to the database!!!");
+					System.out.println("An error occured attempting to add a laptop to the database!");
 					e.printStackTrace();
 					return;
 				}
@@ -216,7 +216,7 @@ public class Manager implements UserManager, ResourceManager{
 			    	try {
 			    		db.executeUpdate("UPDATE books SET "+r.toString()+" WHERE id = '"+id+"'");
 			    	} catch (SQLException e) {
-						System.out.println("An error occured attempting to update a dvd in the database.");
+						System.out.println("An error occured attempting to update a book in the database.");
 						return;
 					}
 			        break;
@@ -224,7 +224,7 @@ public class Manager implements UserManager, ResourceManager{
 			    	try {
 			    		db.executeUpdate("UPDATE laptops SET "+r.toString()+" WHERE id = '"+id+"'");
 			    	} catch (SQLException e) {
-						System.out.println("An error occured attempting to update a dvd in the database.");
+						System.out.println("An error occured attempting to update a laptop in the database.");
 						return;
 					}
 			        break;
@@ -242,7 +242,7 @@ public class Manager implements UserManager, ResourceManager{
 	            	try {
 						db.executeUpdate("DELETE FROM 'dvds' WHERE id = '"+id+"'");
 					} catch (SQLException e) {
-						System.out.println("Unable to delete dvd!!!!!!!!!!!!!");
+						System.out.println("An error occured trying to delete a dvd from the database!");
 						return;
 					}
 	            	break;
@@ -250,7 +250,7 @@ public class Manager implements UserManager, ResourceManager{
 	            	try {
 						db.executeUpdate("DELETE FROM 'book' WHERE id = '"+id+"'");
 					} catch (SQLException e) {
-						System.out.println("Unable to delete book!!!!!!!!!!!!!");
+						System.out.println("An error occured trying to delete a book from the database!");
 						return;
 					}
 	            	break;
@@ -258,7 +258,7 @@ public class Manager implements UserManager, ResourceManager{
 	            	try {
 						db.executeUpdate("DELETE FROM 'laptops' WHERE id = '"+id+"'");
 					} catch (SQLException e) {
-						System.out.println("Unable to delete laptop!!!!!!!!!!!!!");
+						System.out.println("An error occured trying to delete a laptop from the database!");
 						return;
 					}
 	            	break;
@@ -268,13 +268,8 @@ public class Manager implements UserManager, ResourceManager{
 		}
 	}
 
-	// TODO Things to do:
-	//addTransaction
-	//requestResource
-    //reserveResource
 	public void reserveResource(int id) {
 		// TODO some more code has to be written for this
-
 	}
 
 	public void requestResource(int id) {
@@ -295,13 +290,14 @@ public class Manager implements UserManager, ResourceManager{
 				return false;
 			}
 		} catch (SQLException e) {
+			System.out.println("An error occured trying to locate a user with username: "+username+" in the database!");
 			e.printStackTrace();
 		}
 		return false;
 	}
 
 	public void createUser(User u) {
-		if(retriveUser(u.getUsername()) !=null) {
+		if(retriveUser(u.getUsername()) != null) {
 			System.out.println("User already exists! Please choose a unique username.");
 			return;
 		}
@@ -309,8 +305,9 @@ public class Manager implements UserManager, ResourceManager{
 			try {
 				db.executeUpdate("INSERT INTO users VALUES ('"+u.getUsername()+"', '"+u.getFirstName()+"', '"+
 						u.getLastName()+"', '"+u.getAddress()+"', '"+u.getProfileImage()+"', '"+u.getBalance()+"')");
+				users.add(u);
 			} catch (SQLException e) {
-				System.out.println("Unable to add user!!!");
+				System.out.println("An error occured attempting to add a user to the database!");
 				e.printStackTrace();
 				return;
 			}
@@ -319,13 +316,13 @@ public class Manager implements UserManager, ResourceManager{
 				db.executeUpdate("INSERT INTO librarians VALUES ('"+u.getUsername()+"', '"+u.getFirstName()+"', '"+
 						u.getLastName()+"', '"+u.getAddress()+"', '"+u.getProfileImage()+"', '"+u.getBalance()+"', '"+
 						((Librarian)u).getStaffNumber()+"', '"+((Librarian)u).getEmploymentDate().toString()+"')");
+				users.add(u);
 			} catch (SQLException e) {
-				System.out.println("Unable to add librarian!!!");
+				System.out.println("An error occured attempting to add a librarian to the database!");
 				e.printStackTrace();
 				return;
 			}
 		}
-		users.add(u);
 	}
 
 	public void deleteUser(String username) {
@@ -333,11 +330,12 @@ public class Manager implements UserManager, ResourceManager{
 			if(users.get(i).getUsername().equalsIgnoreCase(username)) {
 				try {
 					db.executeUpdate("DELETE FROM 'users' WHERE username = '"+username+"'");
+					users.remove(i);
 				} catch (SQLException e) {
-					System.out.println("Unable to delete user!!!!!!!!!!!!!");
+					System.out.println("An error occured trying to delete a user from the database!");
+					e.printStackTrace();
 					return;
 				}
-				users.remove(i);
 			}
 		}
 	}
@@ -358,12 +356,12 @@ public class Manager implements UserManager, ResourceManager{
 				user.toString();
 				try {
 					db.executeUpdate("UPDATE users SET "+user.toString()+" WHERE username = '"+username+"'");
+					users.set(i, u);
 				} catch (SQLException e) {
-					System.out.println("Unable to update user!!!!!!!!!!!!!");
+					System.out.println("An error occured attempting to update a user in the database!");
 					e.printStackTrace();
 					return;
 				}
-				users.set(i, u);
 			}
 		}
 	}
@@ -413,7 +411,7 @@ public class Manager implements UserManager, ResourceManager{
 				users.add(u);
 			}
 		} catch (SQLException e) {
-			System.out.println("Unable to get users!!");
+			System.out.println("An error occured trying to retrieve all users/librarians in the database!");
 			e.printStackTrace();
 			return null;
 		}
@@ -421,12 +419,10 @@ public class Manager implements UserManager, ResourceManager{
 	}
 
 	public ArrayList<Transaction> getTransactions() {
-		this.transactions.clear();
+		transactions.clear();
 		try {
 			ResultSet transactions = db.executeQuery("SELECT * FROM 'transactions'");
 			while (transactions.next()) {
-				//Date.valueOf() for loading dates of transactions
-				//int id, String username, int resourceId, int copyId, Date dateTaken, Date dueDate, int status
 				int id = transactions.getInt("id");
 				String username = transactions.getString("username");
 				int resourceId = transactions.getInt("resourceId");
@@ -440,9 +436,9 @@ public class Manager implements UserManager, ResourceManager{
 				this.transactions.add(t);
 			}
 		} catch (SQLException e) {
-			System.out.println("Unable to retrive transactions from the database!");
+			System.out.println("An error occured trying to retrieve all transactions in the database!");
 			e.printStackTrace();
 		}
-		return this.transactions;
+		return transactions;
 	}
 }
