@@ -48,6 +48,10 @@ public class User {
 	public float getBalance() {
 		return balance;
 	}
+	
+	public void subtractBalance(float amount) {
+		this.balance = this.balance - amount;
+	}
 
 	public void setAddress(String address) {
 		this.address = address;
