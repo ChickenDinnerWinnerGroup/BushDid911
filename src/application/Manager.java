@@ -1,3 +1,4 @@
+package application;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,14 +14,25 @@ import resources.ResourceManager;
 import users.Librarian;
 import users.User;
 import users.UserManager;
-
+/**
+ *
+ * @author Mohamed Ashaibani
+ *
+ */
 public class Manager implements UserManager, ResourceManager{
+	private static Manager _instance;
 	private Database db;
 	private ArrayList<Resource> resources;
 	private ArrayList<User> users;
 	private User currentUser;
 	private ArrayList<Transaction> transactions;
 
+	/**
+	 *   Manager class constructor.
+	 *   <p>
+	 *   When called it creates a connection to the database and
+	 *   initialises the users, resources and transactions arrays.
+	 */
 	public Manager() {
 		this.db = new Database("tawe.db");
 		this.users = new ArrayList<User>();
@@ -28,6 +40,13 @@ public class Manager implements UserManager, ResourceManager{
 		this.transactions = new ArrayList<Transaction>();
 	}
 
+	/**
+	 * Returns a list of all the resources by querying
+	 * the books, dvds and laptops tables in the database.
+	 *
+	 * @return ArrayList<Resources>
+	 * @see Database
+	 */
 	public ArrayList<Resource> getResources() {
 		// TODO NEED TO DO NATURAL JOIN TO CREATE UNIQUE KEY ON ALL 3 RESOURCE TABLES
 		resources.clear();
@@ -102,8 +121,14 @@ public class Manager implements UserManager, ResourceManager{
 		return resources;
 	}
 
-	//   example call:
-	//   getResourceByType(DVD.class)
+	/**
+	 * Returns a list of resources that are an instance of the classType parameter.
+	 * The classType parameter must be a class that extends the Resource class.
+	 *
+	 * @param  classType  a class that extends the Resource class e.g. DVD.class/Book.class/Laptop.class
+	 * @return            the image at the specified URL
+	 * @see               Image
+	 */
 	//   will return an arraylist with every class that is a subclass of the given class type in the resources list
 	public ArrayList<Resource> getResourceByType(Class<Resource> classType) {
 		ArrayList<Resource> temp = new ArrayList<Resource>();
@@ -285,9 +310,16 @@ public class Manager implements UserManager, ResourceManager{
 		try {
 			ResultSet results = db.executeQuery("SELECT * FROM 'users' WHERE username='"+username+"'");
 			if (results.isBeforeFirst() ) {
+				this.currentUser = retrieveUser(username);
 				return true;
 			} else {
-				return false;
+				results = db.executeQuery("SELECT * FROM 'librarians' WHERE username='"+username+"'");
+				if (results.isBeforeFirst() ) {
+					this.currentUser = retrieveUser(username);
+					return true;
+				} else {
+					return false;
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println("An error occured trying to locate a user with username: "+username+" in the database!");
@@ -297,14 +329,14 @@ public class Manager implements UserManager, ResourceManager{
 	}
 
 	public void createUser(User u) {
-		if(retriveUser(u.getUsername()) != null) {
+		if(retrieveUser(u.getUsername()) != null) {
 			System.out.println("User already exists! Please choose a unique username.");
 			return;
 		}
 		if(!u.isLibrarian()) {
 			try {
 				db.executeUpdate("INSERT INTO users VALUES ('"+u.getUsername()+"', '"+u.getFirstName()+"', '"+
-						u.getLastName()+"', '"+u.getAddress()+"', '"+u.getProfileImage()+"', '"+u.getBalance()+"')");
+						u.getLastName()+"', '"+u.getAddress()+"', '"+u.getPhoneNumber()+"', '"+u.getProfileImage()+"', '"+u.getBalance()+"')");
 				users.add(u);
 			} catch (SQLException e) {
 				System.out.println("An error occured attempting to add a user to the database!");
@@ -314,7 +346,7 @@ public class Manager implements UserManager, ResourceManager{
 		} else {
 			try {
 				db.executeUpdate("INSERT INTO librarians VALUES ('"+u.getUsername()+"', '"+u.getFirstName()+"', '"+
-						u.getLastName()+"', '"+u.getAddress()+"', '"+u.getProfileImage()+"', '"+u.getBalance()+"', '"+
+						u.getLastName()+"', '"+u.getAddress()+"', '"+u.getPhoneNumber()+"', '"+u.getProfileImage()+"', '"+u.getBalance()+"', '"+
 						((Librarian)u).getStaffNumber()+"', '"+((Librarian)u).getEmploymentDate().toString()+"')");
 				users.add(u);
 			} catch (SQLException e) {
@@ -340,7 +372,7 @@ public class Manager implements UserManager, ResourceManager{
 		}
 	}
 
-	public User retriveUser(String username) {
+	public User retrieveUser(String username) {
 		for (User u : getUsers()) {
 			if(u.getUsername().equalsIgnoreCase(username)) {
 				return u;
@@ -389,12 +421,13 @@ public class Manager implements UserManager, ResourceManager{
 				String firstname = result.getString("firstname");
 				String lastname = result.getString("lastname");
 				String address = result.getString("address");
+				String phoneNumber = result.getString("phoneNumber");
 				String profileImage = result.getString("profileImage");
 				String staffNumber = result.getString("staffNumber");
 				Date employmentDate = Date.valueOf(result.getString("employmentDate"));
 				float balance = result.getFloat("balance");
 
-				Librarian u = new Librarian(username, firstname, lastname, address, profileImage, balance, staffNumber, employmentDate);
+				Librarian u = new Librarian(username, firstname, lastname, address, phoneNumber, profileImage, balance, staffNumber, employmentDate);
 				users.add(u);
 			}
 			result = db.executeQuery("SELECT * FROM 'users'");
@@ -404,10 +437,11 @@ public class Manager implements UserManager, ResourceManager{
 				String firstname = result.getString("firstname");
 				String lastname = result.getString("lastname");
 				String address = result.getString("address");
+				String phoneNumber = result.getString("phoneNumber");
 				String profileImage = result.getString("profileImage");
 				float balance = result.getFloat("balance");
 
-				User u = new User(username, firstname, lastname, address, profileImage, balance);
+				User u = new User(username, firstname, lastname, address, phoneNumber, profileImage, balance);
 				users.add(u);
 			}
 		} catch (SQLException e) {
@@ -440,5 +474,16 @@ public class Manager implements UserManager, ResourceManager{
 			e.printStackTrace();
 		}
 		return transactions;
+	}
+
+	public static Manager getInstance() {
+		if(_instance == null) {
+			_instance = new Manager();
+		}
+		return _instance;
+	}
+
+	public void logout() {
+		this.currentUser = null;
 	}
 }

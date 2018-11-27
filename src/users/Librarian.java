@@ -6,13 +6,14 @@ public class Librarian extends User {
 	private Date employmentDate;
 	private String staffNumber;
 
-	public Librarian(String username, String firstName, String lastName, String address, String profileImage, String staffNumber, Date employmentDate) {
-		super(username, firstName, lastName, address, profileImage);
+	public Librarian(String username, String firstName, String lastName, String address, String phoneNumber, String profileImage, String staffNumber, Date employmentDate) {
+		super(username, firstName, lastName, address, phoneNumber, profileImage);
 		this.staffNumber = staffNumber;
 		this.employmentDate = employmentDate;
 	}
-	public Librarian(String username, String firstName, String lastName, String address, String profileImage, float balance, String staffNumber, Date employmentDate) {
-		super(username, firstName, lastName, address, profileImage, balance);
+
+	public Librarian(String username, String firstName, String lastName, String address, String phoneNumber, String profileImage, float balance, String staffNumber, Date employmentDate) {
+		super(username, firstName, lastName, address, phoneNumber, profileImage, balance);
 		this.staffNumber = staffNumber;
 		this.employmentDate = employmentDate;
 	}
