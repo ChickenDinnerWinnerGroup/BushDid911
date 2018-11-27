@@ -236,31 +236,13 @@ public class Manager implements UserManager, ResourceManager {
 	public void updateResource(int id, Resource r) {
 		for (int i = 0; i < resources.size(); i++) {
 			if (resources.get(i).getID() == id) {
-				switch (resources.get(i).getClass().getSimpleName().toLowerCase()) {
-				case "dvd":
-					try {
-						db.executeUpdate("UPDATE dvds SET " + r.toString() + " WHERE id = '" + id + "'");
-					} catch (SQLException e) {
-						System.out.println("An error occured attempting to update a dvd in the database.");
-						return;
-					}
-					break;
-				case "book":
-					try {
-						db.executeUpdate("UPDATE books SET " + r.toString() + " WHERE id = '" + id + "'");
-					} catch (SQLException e) {
-						System.out.println("An error occured attempting to update a book in the database.");
-						return;
-					}
-					break;
-				case "laptop":
-					try {
-						db.executeUpdate("UPDATE laptops SET " + r.toString() + " WHERE id = '" + id + "'");
-					} catch (SQLException e) {
-						System.out.println("An error occured attempting to update a laptop in the database.");
-						return;
-					}
-					break;
+				String table = resources.get(i).getClass().getSimpleName().toLowerCase() + "s";
+				try {
+					db.executeUpdate("UPDATE " + table + " SET " + r.toString() + " WHERE id = '" + id + "'");
+				} catch (SQLException e) {
+					System.out.println("An error occured attempting to update a "
+							+ table.substring(0, table.length() - 1) + " in the database.");
+					return;
 				}
 				resources.set(i, r);
 			}
@@ -270,33 +252,15 @@ public class Manager implements UserManager, ResourceManager {
 	public void removeResource(int id) {
 		for (int i = 0; i < resources.size(); i++) {
 			if (resources.get(i).getID() == id) {
-				switch (resources.get(i).getClass().getSimpleName().toLowerCase()) {
-				case "dvd":
-					try {
-						db.executeUpdate("DELETE FROM 'dvds' WHERE id = '" + id + "'");
-					} catch (SQLException e) {
-						System.out.println("An error occured trying to delete a dvd from the database!");
-						return;
-					}
-					break;
-				case "book":
-					try {
-						db.executeUpdate("DELETE FROM 'book' WHERE id = '" + id + "'");
-					} catch (SQLException e) {
-						System.out.println("An error occured trying to delete a book from the database!");
-						return;
-					}
-					break;
-				case "laptop":
-					try {
-						db.executeUpdate("DELETE FROM 'laptops' WHERE id = '" + id + "'");
-					} catch (SQLException e) {
-						System.out.println("An error occured trying to delete a laptop from the database!");
-						return;
-					}
-					break;
+				String table = resources.get(i).getClass().getSimpleName().toLowerCase() + "s";
+				try {
+					db.executeUpdate("DELETE FROM '" + table + "' WHERE id = '" + id + "'");
+					resources.remove(i);
+				} catch (SQLException e) {
+					System.out.println("An error occured trying to delete a " + table.substring(0, table.length() - 1)
+							+ " from the database!");
+					return;
 				}
-				resources.remove(i);
 			}
 		}
 	}
