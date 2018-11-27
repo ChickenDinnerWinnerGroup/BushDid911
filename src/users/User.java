@@ -11,14 +11,15 @@ public class User {
 	private float balance = 0.0f;
 	private String phoneNumber;
 
-	public User(String username, String firstName, String lastName, String address, String phoneNumber, String profileImage, float balance) {
+	public User(String username, String firstName, String lastName, String address, String phoneNumber,
+			String profileImage, float balance) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.profileImage = profileImage;
-		this.balance  = balance;
+		this.balance = balance;
 	}
 
 	public String getUsername() {
@@ -65,8 +66,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		String userString = "username = '"+username+"', firstname = '"+firstName+"'"+", address = '"
-				+address+"', phoneNumber = '"+phoneNumber+"', profileImage = '"+profileImage+"'"+", balance = '"+balance+"'";
+		String userString = "username = '" + username + "', firstname = '" + firstName + "'" + ", address = '" + address
+				+ "', phoneNumber = '" + phoneNumber + "', profileImage = '" + profileImage + "'" + ", balance = '"
+				+ balance + "'";
 		return userString;
 	}
 }
