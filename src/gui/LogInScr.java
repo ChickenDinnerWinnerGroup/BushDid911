@@ -192,7 +192,7 @@ public class LogInScr extends Application {
 			 	fullName = fNameFld.getText() + " " + sNameFld.getText();
 				fAddress = addressFld.getText() + ";" + postcodeFld.getText();
 				number = phoneNumberFld.getText();
-				User u = new User(username, fNameFld.getText(), sNameFld.getText(), fAddress, number, "1.png");
+				User u = new User(username, fNameFld.getText(), sNameFld.getText(), fAddress, number, "1.png", 0.0f);
 				manager.createUser(u);
 				if(manager.authenticate(u.getUsername())) {
 					System.out.println("Created user and logged in successfully");

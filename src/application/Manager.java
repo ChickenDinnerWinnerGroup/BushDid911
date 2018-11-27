@@ -385,9 +385,9 @@ public class Manager implements UserManager, ResourceManager{
 		for(int i = 0; i < users.size(); i++) {
 			if(users.get(i).getUsername().equalsIgnoreCase(username)) {
 				User user = users.get(i);
-				user.toString();
+				String table = user.isLibrarian() ? "librarians" : "users";
 				try {
-					db.executeUpdate("UPDATE users SET "+user.toString()+" WHERE username = '"+username+"'");
+					db.executeUpdate("UPDATE "+table+" SET "+user.toString()+" WHERE username = '"+username+"'");
 					users.set(i, u);
 				} catch (SQLException e) {
 					System.out.println("An error occured attempting to update a user in the database!");
