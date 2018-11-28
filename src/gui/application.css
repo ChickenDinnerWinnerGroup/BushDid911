@@ -1,0 +1,43 @@
+
+.button{
+	-fx-background-color: #DC143C;
+	-fx-background-radius:0;
+	-fx-text-fill: #FFFFFF;
+	-fx-font-size:16px;
+}
+.button:hover{
+	-fx-background-color: #FFFFFF;
+	-fx-background-radius:0;
+	-fx-text-fill: #000000;
+	-fx-font-size:16px;
+	
+}
+
+#top {
+	-fx-background-color: #DC143C;
+	
+} 
+
+#menuBar {
+	-fx-background-color: #DC143C;
+
+} 
+#bottomBar {
+	-fx-background-color: #DC143C;
+
+	
+}
+#copyNote {
+	-fx-text-fill: #FFFFFF;
+	-fx-font-size:16;
+	
+	
+}
+#userName{
+	-fx-text-fill: #FFFFFF;
+	-fx-font-size:16;
+	
+}
+.root {
+	-fx-background-color: #cccccc;
+}
