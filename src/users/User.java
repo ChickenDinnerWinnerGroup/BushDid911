@@ -1,5 +1,7 @@
 package users;
 
+import application.Manager;
+
 public class User {
 	private String firstName;
 	private String lastName;
@@ -7,22 +9,17 @@ public class User {
 	private String address;
 	private String profileImage;
 	private float balance = 0.0f;
+	private String phoneNumber;
 
-	public User(String username, String firstName, String lastName, String address, String profileImage) {
+	public User(String username, String firstName, String lastName, String address, String phoneNumber,
+			String profileImage, float balance) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
+		this.phoneNumber = phoneNumber;
 		this.profileImage = profileImage;
-	}
-
-	public User(String username, String firstName, String lastName, String address, String profileImage, float balance) {
-		this.username = username;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.profileImage = profileImage;
-		this.balance  = balance;
+		this.balance = balance;
 	}
 
 	public String getUsername() {
@@ -48,14 +45,19 @@ public class User {
 	public float getBalance() {
 		return balance;
 	}
-	
-	public void subtractBalance(float amount) {
-		this.balance = this.balance - amount;
+
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
 	public void setAddress(String address) {
 		this.address = address;
-		// TODO Implement database code (basically write query and call the user function)
+		Manager.getInstance().updateUser(username, this);
+	}
+
+	public void setBalance(float balance) {
+		this.balance = balance;
+		Manager.getInstance().updateUser(username, this);
 	}
 
 	public boolean isLibrarian() {
@@ -64,8 +66,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		String userString = "username = '"+username+"', firstname = '"+firstName+"'"+", address = '"
-				+address+"', profileImage = '"+profileImage+"'"+", balance = '"+balance+"'";
+		String userString = "username = '" + username + "', firstname = '" + firstName + "'" + ", address = '" + address
+				+ "', phoneNumber = '" + phoneNumber + "', profileImage = '" + profileImage + "'" + ", balance = '"
+				+ balance + "'";
 		return userString;
 	}
 }

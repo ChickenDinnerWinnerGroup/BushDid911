@@ -9,8 +9,6 @@ public class Book extends Resource {
 	private String isbn;
 	private String language;
 
-	//Takes: int id, String title, int year, String thumbnail, String auth, String pub,
-	//       String genre, String isbn, String lang, ArrayList<Copy> copies, String[] reserveQueue
 	public Book (int id, String title, int year, String thumbnail, String auth, String pub,
 			String genre, String isbn, String lang, ArrayList<Copy> copies, String[] reserveQueue) {
 		super (id, title, year, thumbnail, copies, reserveQueue);
