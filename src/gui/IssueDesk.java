@@ -49,6 +49,7 @@ public class IssueDesk extends Application {
 			Button logOut = new Button("Log out");
 			HBox topRight = new HBox();
 			topRight.setAlignment(Pos.CENTER_RIGHT);
+<<<<<<< HEAD
 			
 			Button backButton = new Button("Back");
 
@@ -108,6 +109,49 @@ public class IssueDesk extends Application {
 				
 			});
 			
+=======
+
+			top.setPadding(new Insets(2));
+
+			Circle profilePic = new Circle(40);
+
+			profilePic.setFill(new ImagePattern(profile));
+			topLeft.getChildren().addAll(profilePic, userName);
+			topLeft.setSpacing(20);
+			topRight.getChildren().add(logOut);
+			top.getChildren().addAll(topLeft, topRight);
+			top.setSpacing(300);
+
+			VBox menuBar = new VBox();
+			menuBar.minWidth(150);
+			menuBar.setId("menuBar");
+
+			Button fineButton = new Button("Pay a fine");
+			fineButton.setMaxWidth(BUTTON_MAX_WIDTH);
+			fineButton.setMinHeight(BUTTON_MAX_HEIGHT);
+			Button returnCopyButton = new Button("Return a book etc.");
+			returnCopyButton.setMaxWidth(BUTTON_MAX_WIDTH);
+			returnCopyButton.setMinHeight(BUTTON_MAX_HEIGHT);
+			Button takeOutButton = new Button("Take out a book etc.");
+			takeOutButton.setMaxWidth(BUTTON_MAX_WIDTH);
+			takeOutButton.setMinHeight(BUTTON_MAX_HEIGHT);
+
+			menuBar.getChildren().addAll(fineButton, returnCopyButton, takeOutButton);
+			menuBar.setSpacing(20);
+
+			HBox bottomBar = new HBox();
+			bottomBar.setId("bottomBar");
+			Label copyNote = new Label("Copyright Tawe-Lib 2019");
+			copyNote.setId("copyNote");
+			bottomBar.getChildren().add(copyNote);
+			bottomBar.setAlignment(Pos.CENTER);
+
+			root.setBottom(bottomBar);
+			root.setTop(top);
+			root.setLeft(menuBar);
+			Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+			LogInScr logIn = new LogInScr();
+>>>>>>> branch 'master' of https://github.com/ChickenDinnerWinnerGroup/ChickenDinner.git
 
 			/**
 			logOut.setOnAction(e -> {
