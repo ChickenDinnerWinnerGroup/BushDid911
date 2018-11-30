@@ -71,7 +71,7 @@ public class Dashboard extends Application {
 			Button avatar = new Button("Avatar");
 			avatar.setMaxWidth(BUTTON_MAX_WIDTH);
 			avatar.setMinHeight(BUTTON_MAX_HEIGHT);
-<<<<<<< HEAD
+
 			
 			Button tempLibButton = new Button("Librarian");
 			tempLibButton.setMaxWidth(BUTTON_MAX_WIDTH);
@@ -120,30 +120,6 @@ public class Dashboard extends Application {
 				desk.start(primaryStage);
 			});
 			
-=======
-
-			menuBar.getChildren().addAll(issueDesk, browse, avatar);
-			menuBar.setSpacing(20);
-
-			HBox bottomBar = new HBox();
-			bottomBar.setId("bottomBar");
-			Label copyNote = new Label("Copyright Tawe-Lib 2019");
-			copyNote.setId("copyNote");
-			bottomBar.getChildren().add(copyNote);
-			bottomBar.setAlignment(Pos.CENTER);
-
-			root.setBottom(bottomBar);
-			root.setTop(top);
-			root.setLeft(menuBar);
-			Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-			LogInScr logIn = new LogInScr();
-
-			logOut.setOnAction(e -> {
-				manager.logout();
-				logIn.start(primaryStage);
-			});
->>>>>>> branch 'master' of https://github.com/ChickenDinnerWinnerGroup/ChickenDinner.git
-
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			primaryStage.getIcons().add(new Image("images/swanseauni.png"));

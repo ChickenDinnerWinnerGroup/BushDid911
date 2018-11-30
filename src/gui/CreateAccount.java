@@ -104,8 +104,6 @@ public class CreateAccount extends Application {
 		center.add(back, 1, 6);
 		center.add(label1, 0, 7);
 
-		// add the data to the root
-		// add the root to the scene to be displayed
 		root.setCenter(center);
 		Scene scene2 = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -142,7 +140,7 @@ public class CreateAccount extends Application {
 				}
 			}
 		});
-		//back.setOnAction(e -> scene1(primaryStage));
+
 		scene2.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.getIcons().add(new Image("images/logo.png"));
 		primaryStage.setTitle("Tawe-Lib");

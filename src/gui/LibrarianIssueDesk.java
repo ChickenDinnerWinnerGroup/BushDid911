@@ -53,7 +53,7 @@ public class LibrarianIssueDesk extends Application {
 			top.setPadding(new Insets(2));
 
 			Circle profilePic = new Circle(40);
-<<<<<<< HEAD
+
 			Button backButton = new Button("Back");
 
 			profilePic.setFill(new ImagePattern(profile));
@@ -115,58 +115,7 @@ public class LibrarianIssueDesk extends Application {
 				instance.start(primaryStage);
 				
 			});
-=======
 
-			profilePic.setFill(new ImagePattern(profile));
-			topLeft.getChildren().addAll(profilePic, userName);
-			topLeft.setSpacing(20);
-			topRight.getChildren().add(logOut);
-			top.getChildren().addAll(topLeft, topRight);
-			top.setSpacing(300);
-
-			VBox menuBar = new VBox();
-			menuBar.minWidth(150);
-			menuBar.setId("menuBar");
-
-			Button fineButton = new Button("Pay a fine");
-			fineButton.setMaxWidth(BUTTON_MAX_WIDTH);
-			fineButton.setMinHeight(BUTTON_MAX_HEIGHT);
-			Button returnCopyButton = new Button("Return a book etc.");
-			returnCopyButton.setMaxWidth(BUTTON_MAX_WIDTH);
-			returnCopyButton.setMinHeight(BUTTON_MAX_HEIGHT);
-			Button takeOutButton = new Button("Take out a book etc.");
-			takeOutButton.setMaxWidth(BUTTON_MAX_WIDTH);
-			takeOutButton.setMinHeight(BUTTON_MAX_HEIGHT);
-
-			menuBar.getChildren().addAll(fineButton, returnCopyButton, takeOutButton);
-			menuBar.setSpacing(20);
-
-			HBox bottomBar = new HBox();
-			bottomBar.setId("bottomBar");
-			Label copyNote = new Label("Copyright Tawe-Lib 2019");
-			copyNote.setId("copyNote");
-			bottomBar.getChildren().add(copyNote);
-			bottomBar.setAlignment(Pos.CENTER);
-
-			root.setBottom(bottomBar);
-			root.setTop(top);
-			root.setLeft(menuBar);
-			Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-			LogInScr logIn = new LogInScr();
->>>>>>> branch 'master' of https://github.com/ChickenDinnerWinnerGroup/ChickenDinner.git
-
-			/**
-			logOut.setOnAction(e -> {
-				manager.logout();
-				logIn.start(primaryStage);
-			});
-			
-			
-			issueDesk.setOnAction(e -> {
-				IssueDesk desk = new IssueDesk();
-				desk.start(primaryStage);
-			});
-			**/
 
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
