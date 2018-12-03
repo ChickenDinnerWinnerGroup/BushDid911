@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -49,10 +50,19 @@ public class IssueDesk extends Application {
 			Button logOut = new Button("Log out");
 			HBox topRight = new HBox();
 			topRight.setAlignment(Pos.CENTER_RIGHT);
+			Label fineMessage = new Label ();
+			Label validEntry = new Label ();
+			
+			TextField fineTextFeild = new TextField();
+			fineTextFeild.setMaxWidth(150);
 
 			
 			Button backButton = new Button("Back");
 
+			Button payButton = new Button ("Pay Fine");
+			payButton.setVisible(false);
+			
+			
 			top.setPadding(new Insets(2));
 
 			Circle profilePic = new Circle(40);
@@ -69,7 +79,29 @@ public class IssueDesk extends Application {
 			VBox menuBar = new VBox();
 			menuBar.minWidth(150);
 			menuBar.setId("menuBar");
+			
+			VBox payFine = new VBox();
+			payFine.setVisible(false);
+			payFine.minWidth(150);
+			payFine.setId("payFine");
+			payFine.getChildren().addAll(fineMessage,validEntry);
+			payFine.setSpacing(10);
 
+
+			if (manager.getCurrentUser().getBalance() == 0)
+			{
+				fineMessage.setText("There is no fine to be payed");
+			}
+			else
+			{
+				fineMessage.setText("Total fine payable: £"+Float.toString(manager.getCurrentUser().getBalance()));
+				
+				payFine.getChildren().addAll(fineTextFeild, payButton);
+				payButton.setVisible(true);
+				
+			}
+			
+			
 			Button fineButton = new Button("Pay a fine");
 			fineButton.setMaxWidth(BUTTON_MAX_WIDTH);
 			fineButton.setMinHeight(BUTTON_MAX_HEIGHT);
@@ -93,8 +125,11 @@ public class IssueDesk extends Application {
 			root.setBottom(bottomBar);
 			root.setTop(top);
 			root.setLeft(menuBar);
+			root.setCenter(payFine);
 			Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 			LogInScr logIn = new LogInScr();
+			
+			
 			
 			
 			logOut.setOnAction(e -> {
@@ -108,6 +143,40 @@ public class IssueDesk extends Application {
 				instance.start(primaryStage);
 				
 			});
+			
+			fineButton.setOnAction(e -> {
+				payFine.setVisible(true);
+			});
+			
+			payButton.setOnAction(e -> {
+				if (Float.valueOf(fineTextFeild.getText()) - manager.getCurrentUser().getBalance() == 0)
+				{
+					manager.getCurrentUser().setBalance(manager.getCurrentUser().getBalance() - Float.valueOf(fineTextFeild.getText()));
+					fineMessage.setText("There is no fine to be payed");
+					fineTextFeild.setVisible(false);
+					payButton.setVisible(false);
+					validEntry.setVisible(false);
+				}
+				else if (Float.valueOf(fineTextFeild.getText()) <= manager.getCurrentUser().getBalance())
+				{
+					manager.getCurrentUser().setBalance(manager.getCurrentUser().getBalance() - Float.valueOf(fineTextFeild.getText()));
+					fineMessage.setText("Total fine payable: £"+Float.toString(manager.getCurrentUser().getBalance()));
+					validEntry.setVisible(false);
+				}
+				else
+				{
+					validEntry.setText("Please enter a valid input");
+				}
+			});
+			//TAKE THIS OUT IT IS FOR TESTING
+			Button addOneToBalance = new Button ("Balance+1");
+			menuBar.getChildren().add(addOneToBalance);
+			addOneToBalance.setOnAction(e -> 
+			{
+				manager.getCurrentUser().setBalance(manager.getCurrentUser().getBalance() + 1);
+			});
+			
+			
 			
 
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -131,15 +200,17 @@ public class IssueDesk extends Application {
 		this.userObject = userObject;
 	}
 	
+	public void payFine (float payment)
+			{
+				this.userObject.subtractBalance(payment);
+			}
+	
 	public void returnCopy(Resource item)
 	{
 		
 	}
 	
-	public void payFine (float payment)
-	{
-		this.userObject.subtractBalance(payment);
-	}
+
 	
 	public void issueCopy (Resource item)
 	{
