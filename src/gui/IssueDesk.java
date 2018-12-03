@@ -86,7 +86,7 @@ public class IssueDesk extends Application {
 			payFine.setId("payFine");
 			payFine.getChildren().addAll(fineMessage,validEntry);
 			payFine.setSpacing(10);
-
+ 
 
 			if (manager.getCurrentUser().getBalance() == 0)
 			{
