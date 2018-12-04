@@ -166,6 +166,7 @@ public class LibrarianIssueDesk extends Application {
 						System.out.println("User was found in the database!");
 						confirmFinesPayed(readFile(), manager.getCurrentUser().getUsername());
 						deletePayedFines(username);
+						finesLabel.setText("");
 						updateLabelText(finesLabel);
 						                                                                                         
 					} else {
@@ -225,7 +226,7 @@ public class LibrarianIssueDesk extends Application {
 	    	try (BufferedReader br = new BufferedReader(new FileReader("fines.txt"))) {
 	    		String line = null;
 	             while ((line = br.readLine()) != null) {
-	               label.setText(label.getText() + line);
+	               label.setText(label.getText() +"\n" +line);
 	             }
 	        } catch (IOException e) {
 	            e.printStackTrace();
