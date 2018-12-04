@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -34,7 +35,8 @@ public class IssueDesk extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Image profile = new Image("images/avatars/" + manager.getCurrentUser().getProfileImage());
+			File imagesDir = new File("./images/avatars/");
+			Image profile = new Image("file:" + imagesDir.getAbsolutePath() + "\\" + manager.getCurrentUser().getProfileImage());
 			BorderPane root = new BorderPane();
 
 			HBox top = new HBox();
@@ -52,17 +54,17 @@ public class IssueDesk extends Application {
 			topRight.setAlignment(Pos.CENTER_RIGHT);
 			Label fineMessage = new Label ();
 			Label validEntry = new Label ();
-			
+
 			TextField fineTextFeild = new TextField();
 			fineTextFeild.setMaxWidth(150);
 
-			
+
 			Button backButton = new Button("Back");
 
 			Button payButton = new Button ("Pay Fine");
 			payButton.setVisible(false);
-			
-			
+
+
 			top.setPadding(new Insets(2));
 
 			Circle profilePic = new Circle(40);
@@ -72,21 +74,21 @@ public class IssueDesk extends Application {
 			topLeft.setSpacing(20);
 			topRight.getChildren().add(backButton);
 			topRight.getChildren().add(logOut);
-			
+
 			top.getChildren().addAll(topLeft, topRight);
 			top.setSpacing(300);
 
 			VBox menuBar = new VBox();
 			menuBar.minWidth(150);
 			menuBar.setId("menuBar");
-			
+
 			VBox payFine = new VBox();
 			payFine.setVisible(false);
 			payFine.minWidth(150);
 			payFine.setId("payFine");
 			payFine.getChildren().addAll(fineMessage,validEntry);
 			payFine.setSpacing(10);
- 
+
 
 			if (manager.getCurrentUser().getBalance() == 0)
 			{
@@ -95,13 +97,13 @@ public class IssueDesk extends Application {
 			else
 			{
 				fineMessage.setText("Total fine payable: £"+Float.toString(manager.getCurrentUser().getBalance()));
-				
+
 				payFine.getChildren().addAll(fineTextFeild, payButton);
 				payButton.setVisible(true);
-				
+
 			}
-			
-			
+
+
 			Button fineButton = new Button("Pay a fine");
 			fineButton.setMaxWidth(BUTTON_MAX_WIDTH);
 			fineButton.setMinHeight(BUTTON_MAX_HEIGHT);
@@ -128,26 +130,26 @@ public class IssueDesk extends Application {
 			root.setCenter(payFine);
 			Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 			LogInScr logIn = new LogInScr();
-			
-			
-			
-			
+
+
+
+
 			logOut.setOnAction(e -> {
 				LogInScr instance = new LogInScr();
 				instance.start(primaryStage);
-				
+
 			});
-			
+
 			backButton.setOnAction(e -> {
 				Dashboard instance = new Dashboard();
 				instance.start(primaryStage);
-				
+
 			});
-			
+
 			fineButton.setOnAction(e -> {
 				payFine.setVisible(true);
 			});
-			
+
 			payButton.setOnAction(e -> {
 				if (Float.valueOf(fineTextFeild.getText()) - manager.getCurrentUser().getBalance() == 0)
 				{
@@ -171,13 +173,13 @@ public class IssueDesk extends Application {
 			//TAKE THIS OUT IT IS FOR TESTING
 			Button addOneToBalance = new Button ("Balance+1");
 			menuBar.getChildren().add(addOneToBalance);
-			addOneToBalance.setOnAction(e -> 
+			addOneToBalance.setOnAction(e ->
 			{
 				manager.getCurrentUser().setBalance(manager.getCurrentUser().getBalance() + 1);
 			});
-			
-			
-			
+
+
+
 
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
@@ -189,35 +191,35 @@ public class IssueDesk extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
 	private Queue<Resource> requests = new LinkedList<>();
 	private User userObject;
-	
+
 	public issueDesk (User userObject)
 	{
 		this.userObject = userObject;
 	}
-	
+
 	public void payFine (float payment)
 			{
 				this.userObject.subtractBalance(payment);
 			}
-	
+
 	public void returnCopy(Resource item)
 	{
-		
-	}
-	
 
-	
+	}
+
+
+
 	public void issueCopy (Resource item)
 	{
-		
-	} 
+
+	}
 	//gg
 	 * **/
-	 
+
 }
 

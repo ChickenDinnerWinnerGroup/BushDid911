@@ -1,5 +1,7 @@
 package gui;
 
+import java.io.File;
+
 import application.Manager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -30,7 +32,8 @@ public class Dashboard extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Image profile = new Image("images/avatars/" + manager.getCurrentUser().getProfileImage());
+			File imagesDir = new File("./images/avatars/");
+			Image profile = new Image("file:" + imagesDir.getAbsolutePath() + "\\" + manager.getCurrentUser().getProfileImage());
 			BorderPane root = new BorderPane();
 
 			HBox top = new HBox();

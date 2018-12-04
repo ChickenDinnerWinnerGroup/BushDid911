@@ -8,7 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paint.AvatarSelectorController">
    <children>
-      <Button fx:id="backButton" layoutX="5.0" layoutY="6.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="Back" />
+      <Button fx:id="backButton" layoutX="5.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="17.0" prefWidth="69.0" text="Back" />
       <ImageView fx:id="default1" fitHeight="67.0" fitWidth="77.0" layoutX="22.0" layoutY="62.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="default2" fitHeight="67.0" fitWidth="77.0" layoutX="108.0" layoutY="62.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="default4" fitHeight="67.0" fitWidth="77.0" layoutX="273.0" layoutY="62.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />

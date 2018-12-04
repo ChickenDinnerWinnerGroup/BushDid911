@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -33,7 +34,8 @@ public class LibrarianIssueDesk extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Image profile = new Image("images/avatars/" + manager.getCurrentUser().getProfileImage());
+			File imagesDir = new File("./images/avatars/");
+			Image profile = new Image("file:" + imagesDir.getAbsolutePath() + "\\" + manager.getCurrentUser().getProfileImage());
 			BorderPane root = new BorderPane();
 
 			HBox top = new HBox();
@@ -90,30 +92,30 @@ public class LibrarianIssueDesk extends Application {
 			copyNote.setId("copyNote");
 			bottomBar.getChildren().add(copyNote);
 			bottomBar.setAlignment(Pos.CENTER);
-			
-			
+
+
 
 			root.setBottom(bottomBar);
 			root.setTop(top);
 			root.setLeft(menuBar);
 			Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 			LogInScr logIn = new LogInScr();
-			
+
 			createAcct.setOnAction(e -> {
 				CreateAccount desk = new CreateAccount();
 				desk.start(primaryStage);
 			});
-			
+
 			logOut.setOnAction(e -> {
 				LogInScr instance = new LogInScr();
 				instance.start(primaryStage);
-				
+
 			});
-			
+
 			backButton.setOnAction(e -> {
 				Dashboard instance = new Dashboard();
 				instance.start(primaryStage);
-				
+
 			});
 
 
@@ -127,25 +129,25 @@ public class LibrarianIssueDesk extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
 	public Queue<Resource> getOverdueCopies()
 	{
 		gg
 	}
-	
-	
+
+
 	public boolean canBorrow (int userID)
 	{
-		
+
 	}
-	
+
 	public void createAccount (String username, String firstName, String lastName, String address, String profileImage)
 	{
-		
-	} 
+
+	}
 	**/
 
-	 
+
 }
