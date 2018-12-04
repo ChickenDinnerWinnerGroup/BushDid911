@@ -72,7 +72,7 @@ public class Dashboard extends Application {
 			avatar.setMaxWidth(BUTTON_MAX_WIDTH);
 			avatar.setMinHeight(BUTTON_MAX_HEIGHT);
 
-			
+
 			Button tempLibButton = new Button("Librarian");
 			tempLibButton.setMaxWidth(BUTTON_MAX_WIDTH);
 			tempLibButton.setMinHeight(BUTTON_MAX_HEIGHT);
@@ -97,8 +97,8 @@ public class Dashboard extends Application {
 				manager.logout();
 				logIn.start(primaryStage);
 			});
-			
-			
+
+
 			issueDesk.setOnAction(e -> {
 				if (manager.getCurrentUser().isLibrarian())
 				{
@@ -111,15 +111,21 @@ public class Dashboard extends Application {
 					IssueDesk instance = new IssueDesk();
 					instance.start(primaryStage);
 				}
-				
-				
+
+
 			});
-			
+
 			tempLibButton.setOnAction(e -> {
 				LibrarianIssueDesk desk = new LibrarianIssueDesk();
 				desk.start(primaryStage);
 			});
-			
+
+			avatar.setOnAction(e -> {
+				Paint paint = new Paint();
+				paint.start(primaryStage);
+			});
+
+
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 			primaryStage.getIcons().add(new Image("images/swanseauni.png"));

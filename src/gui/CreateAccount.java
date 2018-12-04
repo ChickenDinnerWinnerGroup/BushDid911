@@ -25,6 +25,7 @@ public class CreateAccount extends Application {
 	public CreateAccount() {
 		manager = Manager.getInstance();
 	}
+
 	public void start(Stage primaryStage) {
 		// scene2
 		GridPane center = new GridPane();
@@ -81,11 +82,11 @@ public class CreateAccount extends Application {
 		createAccount.maxWidth(100);
 
 		Button back = new Button("Back");
-		
+
 		back.setOnAction(e -> {
 			LibrarianIssueDesk instance = new LibrarianIssueDesk();
 			instance.start(primaryStage);
-			
+
 		});
 
 		center.add(name, 0, 0);
@@ -129,7 +130,7 @@ public class CreateAccount extends Application {
 				fullName = fNameFld.getText() + " " + sNameFld.getText();
 				fAddress = addressFld.getText() + ";" + postcodeFld.getText();
 				number = phoneNumberFld.getText();
-				User u = new User(username, fNameFld.getText(), sNameFld.getText(), fAddress, number, "1.png", 0.0f);
+				User u = new User(username, fNameFld.getText(), sNameFld.getText(), fAddress, number, "default1.png", 0.0f);
 				manager.createUser(u);
 				if (manager.authenticate(u.getUsername())) {
 					System.out.println("Created user and logged in successfully");

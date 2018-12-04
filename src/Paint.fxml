@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paint.PaintController">
+   <children>
+      <TabPane prefHeight="92.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="File">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="saveButton" layoutX="14.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="20.0" prefWidth="66.0" text="Save" />
+                        <Button fx:id="clearButton" layoutX="15.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleClear" prefHeight="25.0" prefWidth="63.0" text="Clear" />
+                        <ColorPicker fx:id="mainColourPicker" editable="true" layoutX="221.0" layoutY="29.0" onAction="#handleMainColourPicker" />
+                        <Label layoutX="229.0" layoutY="8.0" text="Main Colour" />
+                        <Button fx:id="exitButton" layoutX="89.0" layoutY="5.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="16.0" prefWidth="59.0" text="Exit" />
+                        <Label layoutX="377.0" layoutY="8.0" text="Fill Colour" />
+                        <ColorPicker fx:id="fillColourPicker" editable="true" layoutX="359.0" layoutY="29.0" onAction="#handleFillColourPicker" />
+                        <Slider fx:id="lineWidthSlider" blockIncrement="1.0" layoutX="497.0" layoutY="31.0" majorTickUnit="24.0" max="50.0" min="1.0" minorTickCount="5" onMouseReleased="#handleLineWidthSliderChange" prefHeight="14.0" prefWidth="89.0" showTickLabels="true" showTickMarks="true" value="2.0" />
+                        <Label layoutX="512.0" layoutY="7.0" text="Line Width" />
+                        <Button fx:id="avatarButton" layoutX="89.0" layoutY="33.0" mnemonicParsing="false" onAction="#handleAvatarSelector" prefHeight="16.0" prefWidth="59.0" text="Avatars" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="ToolBox">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="14.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleToolBoxButton" prefHeight="55.0" prefWidth="89.0" text="Straight Line" />
+                        <Button layoutX="111.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleToolBoxButton" prefHeight="55.0" prefWidth="89.0" text="Free Draw" />
+                        <Button layoutX="211.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleToolBoxButton" prefHeight="55.0" prefWidth="89.0" text="Circle" />
+                        <Button layoutX="312.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleToolBoxButton" prefHeight="55.0" prefWidth="89.0" text="Rectangle" />
+                        <Button layoutX="412.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleToolBoxButton" prefHeight="55.0" prefWidth="89.0" text="Rubber" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Canvas fx:id="canvas" height="400.0" layoutY="95.0" onMouseDragged="#handleCanvasMouseDrag" onMousePressed="#handleCanvasMousePress" onMouseReleased="#handleCanvasMouseRelease" width="600.0" />
+   </children>
+</Pane>

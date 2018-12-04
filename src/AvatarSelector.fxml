@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paint.AvatarSelectorController">
+   <children>
+      <Button fx:id="backButton" layoutX="5.0" layoutY="6.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="Back" />
+      <ImageView fx:id="default1" fitHeight="67.0" fitWidth="77.0" layoutX="22.0" layoutY="62.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="default2" fitHeight="67.0" fitWidth="77.0" layoutX="108.0" layoutY="62.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="default4" fitHeight="67.0" fitWidth="77.0" layoutX="273.0" layoutY="62.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="default3" fitHeight="67.0" fitWidth="77.0" layoutX="192.0" layoutY="62.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="default5" fitHeight="67.0" fitWidth="77.0" layoutX="354.0" layoutY="62.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="custom5" fitHeight="67.0" fitWidth="77.0" layoutX="350.0" layoutY="168.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="custom3" fitHeight="67.0" fitWidth="77.0" layoutX="188.0" layoutY="168.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="custom4" fitHeight="67.0" fitWidth="77.0" layoutX="269.0" layoutY="168.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="custom2" fitHeight="67.0" fitWidth="77.0" layoutX="104.0" layoutY="168.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="custom1" fitHeight="67.0" fitWidth="77.0" layoutX="18.0" layoutY="168.0" onMouseClicked="#selectAvatar" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="13.0" layoutY="39.0" text="Default Avatar 1">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="99.0" layoutY="39.0" text="Default Avatar 2">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="183.0" layoutY="39.0" text="Default Avatar 3">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="264.0" layoutY="39.0" text="Default Avatar 4">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="345.0" layoutY="39.0" text="Default Avatar 5">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="345.0" layoutY="147.0" text="Custom Avatar 5">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="264.0" layoutY="147.0" text="Custom Avatar 4">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="183.0" layoutY="147.0" text="Custom Avatar 3">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="99.0" layoutY="147.0" text="Custom Avatar 2">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="13.0" layoutY="147.0" text="Custom Avatar 1">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+      <Label layoutX="79.0" layoutY="3.0" text="Left click on an image to select it as your current avatar.">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+      <Label layoutX="79.0" layoutY="20.0" text="Right click on an image to delete it from your custom avatars.">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

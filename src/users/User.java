@@ -60,15 +60,20 @@ public class User {
 		Manager.getInstance().updateUser(username, this);
 	}
 
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+		Manager.getInstance().updateUser(username, this);
+	}
+
 	public boolean isLibrarian() {
 		return false;
 	}
 
 	@Override
 	public String toString() {
-		String userString = "username = '" + username + "', firstname = '" + firstName + "'" + ", address = '" + address
-				+ "', phoneNumber = '" + phoneNumber + "', profileImage = '" + profileImage + "'" + ", balance = '"
-				+ balance + "'";
+		String userString = "username = '" + username + "', firstname = '" + firstName + "', lastname = '" + lastName
+				+ "'" + ", address = '" + address + "', phoneNumber = '" + phoneNumber + "', profileImage = '"
+				+ profileImage + "'" + ", balance = '" + balance + "'";
 		return userString;
 	}
 }
