@@ -9,9 +9,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.JOptionPane;
 import javax.swing.text.Position;
 
 import application.Manager;
@@ -59,22 +61,24 @@ public class Browser extends Application {
 		    TextField typeFilter = new TextField();
 		    Button byType = new Button("Filter by resource type");
 		    
-		    TextField nameFilter = new TextField();
-		    Button byName = new Button("Filter by resource name");
+		    TextField IDFilter = new TextField();
+		    Button byID = new Button("Filter by resource ID");
 		    
 		    Button all = new Button("Get all resources");
 		    Button back = new Button("Back");
 		    
 		    FlowPane flowpane = new FlowPane(Orientation.VERTICAL);
 
-		    flowpane.getChildren().addAll(items, typeFilter, byType, nameFilter, byName, all, back);
+		    flowpane.getChildren().addAll(items, typeFilter, byType, IDFilter, byID, all, back);
 
-		    flowpane.setPadding(new Insets(5, 0, 5, 0));
+		    flowpane.setPadding(new Insets(5, 5, 5, 5));
 		    flowpane.setVgap(20);
+		    flowpane.setHgap(20);
 		    
 
 		      
 		    Scene scene = new Scene(flowpane, 700, 400);
+		    scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		    primaryStage.setTitle("Browse for resources");
 		    primaryStage.setScene(scene);
 		    primaryStage.show();
@@ -85,7 +89,7 @@ public class Browser extends Application {
 		    
             
 		    all.setOnAction(ev -> {
-			  
+			   items.setItems(null);
 		       ArrayList<Resource> allResources = manager.getResources();
 		       ObservableList<String> itemNames = FXCollections.observableArrayList();
 		       for (Resource r : allResources) {
@@ -104,7 +108,7 @@ public class Browser extends Application {
 			   try {
 		          selectedType = (Class<Resource>) Class.forName("resources." + typeFilter.getText());
 			   } catch (ClassNotFoundException e) {
-				  e.printStackTrace();
+				  showInfoBox("Resource type not found", "Input Error");
 			   }
 			   
 		       ArrayList<Resource> resources = manager.getResourceByType(selectedType);
@@ -118,6 +122,28 @@ public class Browser extends Application {
 			    
 			});
 		    
+		    byID.setOnAction(ev -> {
+		       items.setItems(null);
+			   int id = 0;
+			   try {
+			      id = Integer.parseInt(IDFilter.getText());
+			      Resource r = manager.getResourceByID(id);
+				  ObservableList<String> itemNames = FXCollections.observableArrayList();
+				  itemNames.add(r.getTitle());
+				  items.setItems(itemNames);
+			   } catch (NumberFormatException e) {
+				  showInfoBox("ID is not a number", "Input Error");
+			   }
+			   
+			   catch (NullPointerException e ){
+				  showInfoBox("ID not recognised", "Input Error");
+				   
+			   }
+			   	   
+			   
+		    	
+		    });
+		    
 			back.setOnAction(e -> {
 				Dashboard instance = new Dashboard();
 				instance.start(primaryStage);
@@ -130,7 +156,16 @@ public class Browser extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
+		
+		
 	}
+	
+	public static void showInfoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
 			
 
 }
