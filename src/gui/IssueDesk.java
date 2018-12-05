@@ -159,9 +159,6 @@ public class IssueDesk extends Application {
 				payFine.setVisible(true);
 			});
 			
-			
-			
-			
 			//TAKE THIS OUT IT IS FOR TESTING
 			Button addOneToBalance = new Button ("Balance+1");
 			menuBar.getChildren().add(addOneToBalance);
@@ -178,20 +175,21 @@ public class IssueDesk extends Application {
 				if (finesLeftToPay - Float.valueOf(fineTextField.getText()) == 0)
 				{
 					writeTransactionToFile(manager.getCurrentUser().getUsername() +" "+ fineTextField.getText());
-					//manager.getCurrentUser().setBalance(manager.getCurrentUser().getBalance() - Float.valueOf(fineTextFeild.getText()));
 					fineMessage.setText("There is no fine to be payed");
 					fineTextField.setVisible(false);
 					payButton.setVisible(false);
 					validEntry.setVisible(false);
 				}
-				else if (Float.valueOf(fineTextField.getText()) <= manager.getCurrentUser().getBalance())
+				else if (finesLeftToPay - Float.valueOf(fineTextField.getText()) > 0)
 				{
-					//manager.getCurrentUser().setBalance(manager.getCurrentUser().getBalance() - Float.valueOf(fineTextFeild.getText()));
-					fineMessage.setText("Total fine payable: £"+Float.toString(manager.getCurrentUser().getBalance()));
+					writeTransactionToFile(manager.getCurrentUser().getUsername() +" "+ fineTextField.getText());
+					System.out.println(finesLeftToPay);
+					fineMessage.setText("Total fine payable: £"+(finesLeftToPay - Float.valueOf(fineTextField.getText())));
 					validEntry.setVisible(false);
 				}
 				else
 				{
+					validEntry.setVisible(true);
 					validEntry.setText("Please enter a valid input");
 				}
 			});
@@ -234,35 +232,5 @@ public class IssueDesk extends Application {
 	    	}
 	    	return total;
 	    }
-	
-	
-	/**
-	private Queue<Resource> requests = new LinkedList<>();
-	private User userObject;
-	
-	public issueDesk (User userObject)
-	{
-		this.userObject = userObject;
-	}
-	
-	public void payFine (float payment)
-			{
-				this.userObject.subtractBalance(payment);
-			}
-	
-	public void returnCopy(Resource item)
-	{
-		
-	}
-	
-
-	
-	public void issueCopy (Resource item)
-	{
-		
-	} 
-	//gg
-	 * **/
-	 
 }
 
