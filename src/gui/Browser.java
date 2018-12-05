@@ -65,11 +65,11 @@ public class Browser extends Application {
 		    Button byID = new Button("Filter by resource ID");
 		    
 		    Button all = new Button("Get all resources");
-		    Button back = new Button("Back");
-		    
+		    Button logOut = new Button("loutout");
+		     Button back = new Button("Back");
 		    FlowPane flowpane = new FlowPane(Orientation.VERTICAL);
 
-		    flowpane.getChildren().addAll(items, typeFilter, byType, IDFilter, byID, all, back);
+		    flowpane.getChildren().addAll(back, logOut, items, typeFilter, byType, IDFilter, byID, all);
 
 		    flowpane.setPadding(new Insets(5, 5, 5, 5));
 		    flowpane.setVgap(20);
@@ -150,7 +150,11 @@ public class Browser extends Application {
 
 			});
 		    
-		    
+			logOut.setOnAction(e -> {
+				LogInScr instance = new LogInScr();
+				instance.start(primaryStage);
+
+			});
 		    
 		    
 		} catch (Exception e) {
