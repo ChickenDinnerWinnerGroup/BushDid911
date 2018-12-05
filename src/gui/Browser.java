@@ -70,7 +70,7 @@ public class Browser extends Application {
 		    flowpane.getChildren().addAll(items, typeFilter, byType, nameFilter, byName, all, back);
 
 		    flowpane.setPadding(new Insets(5, 0, 5, 0));
-		    flowpane.setVgap(20);
+		    flowpane.setVgap(25);
 		    
 
 		      
