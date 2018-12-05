@@ -12,13 +12,14 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+import javax.swing.text.Position;
 
 import application.Manager;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,6 +29,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
@@ -50,33 +52,39 @@ public class Browser extends Application {
 	
 	public void start(Stage primaryStage) {
 		try {
-			HBox hbox = new HBox();
 
-			TextField typeFilter = new TextField();
-		    Button all = new Button("Get all resources");
-		    Button byType = new Button("Filter by resource type");
 		    
 		    ListView<String> items = new ListView<String>();
-		    items.setPrefWidth(100);
-		    items.setPrefHeight(70);
+    
+		    TextField typeFilter = new TextField();
+		    Button byType = new Button("Filter by resource type");
+		    
+		    TextField nameFilter = new TextField();
+		    Button byName = new Button("Filter by resource name");
+		    
+		    Button all = new Button("Get all resources");
+		    Button back = new Button("Back");
+		    
+		    FlowPane flowpane = new FlowPane(Orientation.VERTICAL);
+
+		    flowpane.getChildren().addAll(items, typeFilter, byType, nameFilter, byName, all, back);
+
+		    flowpane.setPadding(new Insets(5, 0, 5, 0));
+		    flowpane.setVgap(20);
 		    
 
-		    BorderPane root = new BorderPane(items);
-		    root.setPadding(new Insets(15));
-		    root.setTop(all);
-		    root.setRight(byType);
-		    root.setBottom(typeFilter);
-
-		    Scene scene = new Scene(root, 600, 400);
+		      
+		    Scene scene = new Scene(flowpane, 700, 400);
+		    primaryStage.setTitle("Browse for resources");
 		    primaryStage.setScene(scene);
 		    primaryStage.show();
 		    
 		    
 		    
 		    
+		    
             
 		    all.setOnAction(ev -> {
-			   hbox.getChildren().clear();
 			  
 		       ArrayList<Resource> allResources = manager.getResources();
 		       ObservableList<String> itemNames = FXCollections.observableArrayList();
@@ -109,6 +117,14 @@ public class Browser extends Application {
 		       
 			    
 			});
+		    
+			back.setOnAction(e -> {
+				Dashboard instance = new Dashboard();
+				instance.start(primaryStage);
+
+			});
+		    
+		    
 		    
 		    
 		} catch (Exception e) {
