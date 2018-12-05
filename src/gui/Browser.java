@@ -93,7 +93,7 @@ public class Browser extends Application {
 		       ArrayList<Resource> allResources = manager.getResources();
 		       ObservableList<String> itemNames = FXCollections.observableArrayList();
 		       for (Resource r : allResources) {
-		    	 itemNames.add(r.getTitle());
+		    	 itemNames.add("ID: " + Integer.toString(r.getID()) + " | Title: " + r.getTitle() + " | Year: " + Integer.toString(r.getYear()));
 
 		       }
 		       items.setItems(itemNames);
@@ -114,7 +114,7 @@ public class Browser extends Application {
 		       ArrayList<Resource> resources = manager.getResourceByType(selectedType);
 		       ObservableList<String> itemNames = FXCollections.observableArrayList();
 			   for (Resource r : resources) {
-			     itemNames.add(r.getTitle());
+			     itemNames.add("ID: " + Integer.toString(r.getID()) + " | Title: " + r.getTitle() + " | Year: " + Integer.toString(r.getYear()));
 			     
 			   }
 		       items.setItems(itemNames);
@@ -129,7 +129,7 @@ public class Browser extends Application {
 			      id = Integer.parseInt(IDFilter.getText());
 			      Resource r = manager.getResourceByID(id);
 				  ObservableList<String> itemNames = FXCollections.observableArrayList();
-				  itemNames.add(r.getTitle());
+				  itemNames.add("ID: " + Integer.toString(r.getID()) + " | Title: " + r.getTitle() + " | Year: " + Integer.toString(r.getYear()));
 				  items.setItems(itemNames);
 			   } catch (NumberFormatException e) {
 				  showInfoBox("ID is not a number", "Input Error");
