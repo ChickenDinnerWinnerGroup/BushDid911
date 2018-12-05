@@ -100,6 +100,11 @@ public class Dashboard extends Application {
 				manager.logout();
 				logIn.start(primaryStage);
 			});
+			
+			browse.setOnAction(e -> {
+				Browser browser = new Browser();
+				browser.start(primaryStage);
+			});
 
 
 			issueDesk.setOnAction(e -> {
