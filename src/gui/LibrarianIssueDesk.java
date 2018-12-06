@@ -55,16 +55,14 @@ public class LibrarianIssueDesk extends Application {
 			Button payButton = new Button ("Pay Fine");
 			payButton.setVisible(false);
 			
-			
+			TextField fineTextFeild = new TextField();
+			fineTextFeild.setMaxWidth(150);
 			
 			TextField usernameField = new TextField();
-			usernameField.setMaxWidth(150);
 			
-			Label fineMessage = new Label ();
+			Label fineMessage = new Label ("Below are the fines that have been payed,\n"
+					+ "Enter a users name to confirm the fine has been payed");
 			Label finesLabel = new Label();
-			
-			Label validEntry = new Label ("This either is not a username or they haven't got any pending fines");
-			validEntry.setVisible(false);
 			
 			userArray = readFile();
 			System.out.print(Arrays.toString(userArray.toArray()));
@@ -82,7 +80,7 @@ public class LibrarianIssueDesk extends Application {
 			HBox topRight = new HBox();
 			topRight.setAlignment(Pos.CENTER_RIGHT);
 			
-			Button payFinesButton =  new Button ("Confirm Fine Payments");
+			Button accessAccount =  new Button ("Confirm Fine Payments");
 
 			top.setPadding(new Insets(2));
 
@@ -110,7 +108,7 @@ public class LibrarianIssueDesk extends Application {
 			payFine.setVisible(false);
 			payFine.minWidth(150);
 			payFine.setId("payFine");
-			payFine.getChildren().addAll(fineMessage, finesLabel,validEntry,usernameField, payFinesButton);
+			payFine.getChildren().addAll(fineMessage, finesLabel, usernameField, accessAccount);
 			payFine.setSpacing(10);
 			
 
@@ -154,27 +152,10 @@ public class LibrarianIssueDesk extends Application {
 			fineButton.setOnAction(e -> {
 				
 				payFine.setVisible(true);
-				if (isEmpty("fines.txt"))
-				{
-					fineMessage.setText("There are no pending fines.");
-					finesLabel.setVisible(false);
-					usernameField.setVisible(false);
-					payFinesButton.setVisible(false);
-				}
-				else
-				{
-					fineMessage.setText("Below are the fines that have been payed,\n"
-							+ "Enter a users name to confirm the fine has been payed"
-							+ "\nFor example type 'admin' if admin paid a fine.");
-					updateLabelText(finesLabel);
-					finesLabel.setVisible(true);
-					usernameField.setVisible(true);
-					payFinesButton.setVisible(true);
-				}
-				
+				updateLabelText(finesLabel);
 			});
 			
-			payFinesButton.setOnAction(e -> {
+			accessAccount.setOnAction(e -> {
 				String username = "";
 				if (usernameField.getText().isEmpty()) {
 					
@@ -182,30 +163,16 @@ public class LibrarianIssueDesk extends Application {
 					username = usernameField.getText();
 					Manager m = Manager.getInstance();
 					if (m.authenticate(username)) {
-						validEntry.setVisible(false);
 						System.out.println("User was found in the database!");
-						if (confirmFinesPayed(readFile(), manager.getCurrentUser().getUsername()) == false)
-						{
-							validEntry.setVisible(true);
-						}
-							
+						confirmFinesPayed(readFile(), manager.getCurrentUser().getUsername());
 						deletePayedFines(username);
+						finesLabel.setText("");
 						updateLabelText(finesLabel);
-		    			if (isEmpty("fines.txt"))
-		    			{
-		    				fineMessage.setText("There are no pending fines.");
-							finesLabel.setVisible(false);
-							usernameField.setVisible(false);
-							payFinesButton.setVisible(false);
-		    			}
 						                                                                                         
 					} else {
-						validEntry.setVisible(true);
 						System.out.println("User was not found in the database!");
 					}
 				}
-				Manager m = Manager.getInstance();
-				m.authenticate(origionalUser);
 			});
 			
 
@@ -226,6 +193,7 @@ public class LibrarianIssueDesk extends Application {
 	    	try (BufferedReader br = new BufferedReader(new FileReader("fines.txt"))) {
 	    		String line = null;
 	             while ((line = br.readLine()) != null) {
+	               // label.setText(label.getText() +"\n"+ line);
 	                String[] splited = line.split(" ");
 	                userArray.addAll(Arrays.asList(splited));
 	             }
@@ -235,21 +203,22 @@ public class LibrarianIssueDesk extends Application {
 	    	return userArray;
 	    }
 	    
-	    private boolean confirmFinesPayed (ArrayList<String> userArray, String user)
+	    private void confirmFinesPayed (ArrayList<String> userArray, String user)
 	    {
-	    	boolean valid = false;
 	    	for (int i=0;i<userArray.size();i++)
 	    	{
 
 	    		if (userArray.get(i).equals(user))
 	    		{
-	    			valid = true;
+	    			
 	    			System.out.println(manager.getCurrentUser().getBalance());
+	    			
 	    			manager.getCurrentUser().setBalance(manager.getCurrentUser().getBalance() - Integer.parseInt(userArray.get(i+1)));
 	    			System.out.println(manager.getCurrentUser().getBalance());
+	    			
 	    		}
+
 	    	}
-	    	return valid;
 	    }
 	    
 	   private void updateLabelText (Label label)
@@ -257,8 +226,7 @@ public class LibrarianIssueDesk extends Application {
 	    	try (BufferedReader br = new BufferedReader(new FileReader("fines.txt"))) {
 	    		String line = null;
 	             while ((line = br.readLine()) != null) {
-	            	String[] splited = line.split(" ");
-	               label.setText(label.getText() +"\n" +splited[0]+" paid £"+splited[1]);
+	               label.setText(label.getText() +"\n" +line);
 	             }
 	        } catch (IOException e) {
 	            e.printStackTrace();
@@ -299,18 +267,5 @@ public class LibrarianIssueDesk extends Application {
 	    	inputFile.delete();
 	    	tempFile.renameTo(inputFile);
 	    }
-	   
-	   private boolean isEmpty(String filePath)
-	   {
-		   File file = new File(filePath);
-		   if (file.length() == 0)
-		   {
-			   return true;
-		   }
-		   else 
-		   {
-			   return false;
-		   }
-	   }
 
 }
