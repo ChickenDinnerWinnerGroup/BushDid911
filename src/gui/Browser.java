@@ -112,16 +112,20 @@ public class Browser extends Application {
 		       Class<Resource> selectedType = null;
 		       String typeFilterText = typeFilter.getText();
 		       
-		       //auto-capitalise the first letter for a class name as user might forget it
-		       typeFilterText = typeFilterText.substring(0, 1).toUpperCase() + typeFilterText.substring(1);
-		       
 			   try {
+				  //auto-capitalise the first letter for a class name as user might forget it
+			      typeFilterText = typeFilterText.substring(0, 1).toUpperCase() + typeFilterText.substring(1);
+			      
 		          selectedType = (Class<Resource>) Class.forName("resources." + typeFilterText);
 			   } catch (ClassNotFoundException e) {
 				  showInfoBox("Resource type not found.", "Input Error");
 			   }
 			   catch (NoClassDefFoundError e) {
 				   showInfoBox("Class not found - double check the character casing.", "Input Error");
+			   }
+			   
+			   catch (StringIndexOutOfBoundsException e) {
+				   showInfoBox("The field was left blank, please try again.", "Input Error");
 			   }
 		       ArrayList<Resource> resources = manager.getResourceByType(selectedType);
 		       ObservableList<String> itemNames = FXCollections.observableArrayList();
