@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import application.Manager;
+import application.Transaction;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,6 +23,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import resources.Resource;
 
 public class IssueDesk extends Application {
 	private static final int WINDOW_WIDTH = 600;
@@ -29,6 +31,7 @@ public class IssueDesk extends Application {
 	private static final int BUTTON_MAX_WIDTH = 150;
 	private static final int BUTTON_MAX_HEIGHT = 40;
 	private Manager manager;
+	private ArrayList<Button> borrowed = new ArrayList<Button>();
 
 	public IssueDesk() {
 		manager = Manager.getInstance();
@@ -72,7 +75,13 @@ public class IssueDesk extends Application {
 			Label fineMessage = new Label ();
 			
 			top.setPadding(new Insets(2));
-
+			
+			//TextField resourceIDField = new TextField();
+			//TextField copyIDField = new TextField();
+			
+			Label currentlyBorrowed = new Label();
+			
+			
 			Circle profilePic = new Circle(40);
 			
 			Button takeOutButton = new Button("Take out a book etc.");
@@ -95,14 +104,38 @@ public class IssueDesk extends Application {
 			menuBar.minWidth(150);
 			menuBar.setId("menuBar");
 			
-			VBox payFine = new VBox();
 			
+			VBox payFine = new VBox();
 			
 			payFine.setVisible(false);
 			payFine.minWidth(150);
 			payFine.setId("payFine");
 			payFine.getChildren().addAll(fineMessage);
 			payFine.setSpacing(10);
+			
+			VBox returnCopy = new VBox();	
+			
+			ArrayList<Transaction> curBor = manager.getTransactions();
+			
+			
+			for(Transaction item : curBor) {
+				if(manager.getCurrentUser().getUsername().equals(item.getUsername())) {
+					Resource curItem = manager.getResourceByID(item.getResourceID());
+					Button b1 = new Button();
+					b1.setText( "Return " + curItem.getTitle());
+					borrowed.add(b1);
+					returnCopy.getChildren().add(b1);
+					
+				}
+			}
+			
+			returnCopy.minWidth(150);
+			returnCopy.setId("Return");
+			returnCopy.setSpacing(10);
+			
+		//TAKE THIS OUT
+			Label testLabel = new Label ("TEST");
+			returnCopy.getChildren().add(testLabel);
 			
 			float fineLeftToPay = manager.getCurrentUser().getBalance() - finesPending(LibrarianIssueDesk.readFile(),
 					manager.getCurrentUser().getUsername());
@@ -120,7 +153,7 @@ public class IssueDesk extends Application {
 				
 			}
 			
-		
+			
 
 			menuBar.getChildren().addAll(fineButton, returnCopyButton, takeOutButton);
 			menuBar.setSpacing(20);
@@ -137,6 +170,7 @@ public class IssueDesk extends Application {
 			root.setLeft(menuBar);
 			root.setCenter(payFine);
 			
+			
 			Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
 			LogInScr logIn = new LogInScr();
 			
@@ -149,11 +183,18 @@ public class IssueDesk extends Application {
 				
 			});
 			
+			returnCopyButton.setOnAction(e -> {
+				root.setCenter(returnCopy);
+				
+			});
+			
 			backButton.setOnAction(e -> {
 				Dashboard instance = new Dashboard();
 				instance.start(primaryStage);
 				
 			});
+			
+			
 			
 			fineButton.setOnAction(e -> {
 				payFine.setVisible(true);
@@ -174,7 +215,7 @@ public class IssueDesk extends Application {
 				
 				if (finesLeftToPay - Float.valueOf(fineTextField.getText()) == 0)
 				{
-					writeTransactionToFile(manager.getCurrentUser().getUsername() +" "+ fineTextField.getText());
+					writeTransactionToFile(manager.getCurrentUser().getUsername() +" "+ fineTextField.getText(), "fines.txt");
 					fineMessage.setText("There is no fine to be payed");
 					fineTextField.setVisible(false);
 					payButton.setVisible(false);
@@ -182,7 +223,7 @@ public class IssueDesk extends Application {
 				}
 				else if (finesLeftToPay - Float.valueOf(fineTextField.getText()) > 0)
 				{
-					writeTransactionToFile(manager.getCurrentUser().getUsername() +" "+ fineTextField.getText());
+					writeTransactionToFile(manager.getCurrentUser().getUsername() +" "+ fineTextField.getText(),"fines.txt");
 					System.out.println(finesLeftToPay);
 					fineMessage.setText("Total fine payable: £"+(finesLeftToPay - Float.valueOf(fineTextField.getText())));
 					validEntry.setVisible(false);
@@ -205,10 +246,10 @@ public class IssueDesk extends Application {
 		}
 	}
 	
-	private void writeTransactionToFile (String line)
+	private void writeTransactionToFile (String line, String fileName)
 	{
 		try {
-            FileWriter writer = new FileWriter("fines.txt", true);
+            FileWriter writer = new FileWriter(fileName, true);
             writer.write(line);
             writer.write("\r\n");   // write new line
             
