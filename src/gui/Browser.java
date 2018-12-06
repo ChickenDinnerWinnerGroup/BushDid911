@@ -124,9 +124,11 @@ public class Browser extends Application {
 				   showInfoBox("Class not found - double check the character casing.", "Input Error");
 			   }
 			   
+			   //if the user enters nothing
 			   catch (StringIndexOutOfBoundsException e) {
 				   showInfoBox("The field was left blank, please try again.", "Input Error");
 			   }
+			   
 		       ArrayList<Resource> resources = manager.getResourceByType(selectedType);
 		       ObservableList<String> itemNames = FXCollections.observableArrayList();
 			   for (Resource r : resources) {
