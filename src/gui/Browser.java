@@ -134,7 +134,7 @@ public class Browser extends Application {
 			   }	    	
 		    });
 		    
-		    
+		    //clear button 
 		    clear.setOnAction(e -> {		    	
 		    	typeFilter.setText("");
 		    	IDFilter.setText("");
@@ -185,7 +185,7 @@ public class Browser extends Application {
 	}
 	
 	
-	//method for showing error and messages to the user in pop-up windows
+	//method for showing error and messages to the user in pop-up windows 
 	public static void showInfoBox(String infoMessage)
     {
         JOptionPane.showMessageDialog(null, infoMessage, "Notification", JOptionPane.INFORMATION_MESSAGE);
