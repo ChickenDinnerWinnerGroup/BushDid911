@@ -24,6 +24,8 @@ import resources.Resource;
 /**
 *
 * @authors Guillaume + Sarang
+* @version 1.0
+* @since 10/12/18
 *
 */
 
@@ -33,7 +35,7 @@ public class Browser extends Application {
 	public Browser() {
 		manager = Manager.getInstance();
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public void start(Stage primaryStage) {
 		try {    
@@ -74,7 +76,8 @@ public class Browser extends Application {
 		    primaryStage.setTitle("Browse for resources");
 		    primaryStage.setScene(scene);
 		    primaryStage.show();
-		    		           
+		    
+		    //setOnAction fucntion for the buttons we have created in the Browser feature
 		    all.setOnAction(ev -> {
 		       ArrayList<Resource> allResources = manager.getResources();
 		       ObservableList<String> itemNames = FXCollections.observableArrayList();
@@ -134,7 +137,7 @@ public class Browser extends Application {
 			   }	    	
 		    });
 		    
-		    //clear button and more comments
+		    //clear button used to clear the search fields
 		    clear.setOnAction(e -> {		    	
 		    	typeFilter.setText("");
 		    	IDFilter.setText("");
@@ -163,6 +166,9 @@ public class Browser extends Application {
 			//this allows the user to see the thumbnail for a resource once it has been clicked
 			items.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 			    @Override
+			    /**
+				 * @param observable, oldValue, newValue
+				**/
 			    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 					 File imagesDir = new File("./images/resources/");
 					 String fileName = getThumbnailName(newValue);
@@ -184,13 +190,18 @@ public class Browser extends Application {
 		}	
 	}
 	
-	
+	//@param N/A
+	//@return Browser object
 	//method for showing error and messages to the user in pop-up windows 
 	public static void showInfoBox(String infoMessage)
     {
         JOptionPane.showMessageDialog(null, infoMessage, "Notification", JOptionPane.INFORMATION_MESSAGE);
     }
 	
+	/**
+	 * @param listViewSelection the current selected item in the listView
+	 * @return the name of resource as a String
+	**/
 	public String getThumbnailName(String listViewSelection) {
 		String name = "";
 		try {		
