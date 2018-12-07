@@ -53,6 +53,7 @@ public class Browser extends Application {
 		    Button takeOut = new Button("Take out selected");
 		    Button logOut = new Button("Log out");
 		    Button back = new Button("Back");
+		    Button clear = new Button("Clear Fields");
 		    
 		    Rectangle thumbnail = new Rectangle(123, 159);
 		    
@@ -62,7 +63,7 @@ public class Browser extends Application {
 		    FlowPane flowpane = new FlowPane(Orientation.VERTICAL);
 
 		    flowpane.getChildren().addAll(back, logOut, items, typeFilter, byType, 
-		    		IDFilter, byID, all, takeOut, thumbnail);
+		    		IDFilter, byID, clear, all, takeOut, thumbnail);
 
 		    flowpane.setPadding(new Insets(10, 10, 10, 10));
 		    flowpane.setVgap(20);
@@ -132,6 +133,12 @@ public class Browser extends Application {
 				   
 			   }	    	
 		    });
+		    
+		    
+		    clear.setOnAction(e -> {		    	
+		    	typeFilter.setText("");
+		    	IDFilter.setText("");
+			});
 		    
 			back.setOnAction(e -> {
 				Dashboard instance = new Dashboard();
