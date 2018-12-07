@@ -134,7 +134,7 @@ public class Browser extends Application {
 			   }	    	
 		    });
 		    
-		    //clear button 
+		    //clear button and more comments
 		    clear.setOnAction(e -> {		    	
 		    	typeFilter.setText("");
 		    	IDFilter.setText("");
