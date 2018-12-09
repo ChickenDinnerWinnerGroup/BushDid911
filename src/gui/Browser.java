@@ -47,6 +47,10 @@ public class Browser extends Application {
 		    typeFilter.setPromptText("Enter the resource type");
 		    Button byType = new Button("Filter by resource type");
 		    
+		    TextField titleFilter = new TextField();
+		    titleFilter.setPromptText("Enter the resource title");
+		    Button byTitle = new Button("Filter by resource title");
+		    
 		    TextField IDFilter = new TextField();
 		    IDFilter.setPromptText("Enter the resource's ID number");
 		    Button byID = new Button("Filter by resource ID");
@@ -64,13 +68,13 @@ public class Browser extends Application {
 		    FlowPane flowpane = new FlowPane(Orientation.VERTICAL);
 
 		    flowpane.getChildren().addAll(back, logOut, items, typeFilter, byType, 
-		    		IDFilter, byID, all, takeOut, thumbnail);
+		    		titleFilter, byTitle, IDFilter, byID, all, takeOut, thumbnail);
 
 		    flowpane.setPadding(new Insets(10, 10, 10, 10));
 		    flowpane.setVgap(20);
 		    flowpane.setHgap(20);
 		    	      
-		    Scene scene = new Scene(flowpane, 752, 500);
+		    Scene scene = new Scene(flowpane, 890, 500);
 		    scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		    primaryStage.setTitle("Browse for resources");
 		    primaryStage.setScene(scene);
@@ -120,6 +124,22 @@ public class Browser extends Application {
 			   }
 		       items.setItems(itemNames);	    
 			});
+		    
+		    byTitle.setOnAction(ev -> {
+		    	try {
+				      String title = titleFilter.getText();
+				      Resource r = manager.getResourceByTitle(title);
+					  ObservableList<String> itemNames = FXCollections.observableArrayList();
+					  itemNames.add("ID: " + Integer.toString(r.getID()) + ", Title: " + r.getTitle() +
+							  ", Year: " + Integer.toString(r.getYear()) + ", Thumbnail: " + r.getThumbnail());
+					  items.setItems(itemNames);
+				}
+		    	
+				//if the user enters nothing
+				catch (StringIndexOutOfBoundsException e) {
+					   showInfoBox("The field was left blank, please try again.");
+				}
+		    });
 		    
 		    byID.setOnAction(ev -> {
 			   try {

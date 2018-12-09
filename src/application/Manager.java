@@ -155,6 +155,16 @@ public class Manager implements UserManager, ResourceManager {
 		}
 		return null;
 	}
+	
+	public Resource getResourceByTitle(String title) {
+		for (Resource r : getResources()) {
+			if (r.getTitle().equals(title)) {
+				return r;
+			}
+		}
+		return null;
+	}
+
 
 	public void addResource(Resource r) {
 		switch (r.getClass().getSimpleName().toLowerCase()) {
