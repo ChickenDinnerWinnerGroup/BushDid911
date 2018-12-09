@@ -88,6 +88,8 @@ public class Browser extends Application {
 		       items.setItems(itemNames);	       
 		    });
 		    
+		    
+		    //if the user wants to search by class type
 		    byType.setOnAction(ev -> {
 		       Class<Resource> selectedType = null;
 		       String typeFilterText = typeFilter.getText();

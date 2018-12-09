@@ -113,7 +113,7 @@ public class Dashboard extends Application {
 					LibrarianIssueDesk instance = new LibrarianIssueDesk();
 					instance.start(primaryStage);
 				}
-				//TAKE OUT BEFORE SUBMISSION THIS IS FOR TESTING
+				//TAKE OUT BEFORE SUBMISSION
 				else
 				{
 					IssueDesk instance = new IssueDesk();
