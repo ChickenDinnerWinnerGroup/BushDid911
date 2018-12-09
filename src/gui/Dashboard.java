@@ -33,7 +33,7 @@ public class Dashboard extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			File imagesDir = new File("./images/avatars/");
-			Image profile = new Image("file:" + imagesDir.getAbsolutePath() + "\\" + manager.getCurrentUser().getProfileImage());
+			Image profile = new Image("file:" + imagesDir.getAbsolutePath() + "//" + manager.getCurrentUser().getProfileImage());
 			BorderPane root = new BorderPane();
 
 			HBox top = new HBox();

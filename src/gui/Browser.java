@@ -40,7 +40,7 @@ public class Browser extends Application {
 	public void start(Stage primaryStage) {
 		try {    
 		    ListView<String> items = new ListView<String>();
-		    items.setPrefWidth(350);
+		    items.setPrefWidth(410);
 		    items.setPrefHeight(477);
     
 		    TextField typeFilter = new TextField();
@@ -55,7 +55,6 @@ public class Browser extends Application {
 		    Button takeOut = new Button("Take out selected");
 		    Button logOut = new Button("Log out");
 		    Button back = new Button("Back");
-		    Button clear = new Button("Clear Fields");
 		    
 		    Rectangle thumbnail = new Rectangle(123, 159);
 		    
@@ -65,19 +64,19 @@ public class Browser extends Application {
 		    FlowPane flowpane = new FlowPane(Orientation.VERTICAL);
 
 		    flowpane.getChildren().addAll(back, logOut, items, typeFilter, byType, 
-		    		IDFilter, byID, clear, all, takeOut, thumbnail);
+		    		IDFilter, byID, all, takeOut, thumbnail);
 
 		    flowpane.setPadding(new Insets(10, 10, 10, 10));
 		    flowpane.setVgap(20);
 		    flowpane.setHgap(20);
 		    	      
-		    Scene scene = new Scene(flowpane, 720, 500);
+		    Scene scene = new Scene(flowpane, 752, 500);
 		    scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		    primaryStage.setTitle("Browse for resources");
 		    primaryStage.setScene(scene);
 		    primaryStage.show();
 		    
-		    //setOnAction fucntion for the buttons we have created in the Browser feature
+		    //setOnAction function for the buttons we have created in the Browser feature
 		    all.setOnAction(ev -> {
 		       ArrayList<Resource> allResources = manager.getResources();
 		       ObservableList<String> itemNames = FXCollections.observableArrayList();
@@ -137,12 +136,6 @@ public class Browser extends Application {
 			   }	    	
 		    });
 		    
-		    //clear button used to clear the search fields
-		    clear.setOnAction(e -> {		    	
-		    	typeFilter.setText("");
-		    	IDFilter.setText("");
-			});
-		    
 			back.setOnAction(e -> {
 				Dashboard instance = new Dashboard();
 				instance.start(primaryStage);
@@ -173,12 +166,12 @@ public class Browser extends Application {
 					 File imagesDir = new File("./images/resources/");
 					 String fileName = getThumbnailName(newValue);
 					 if (fileName.equals("none") || newValue == null) {
-					    String path = "File:" + imagesDir.getAbsolutePath() + "\\" + "blank.png";					
+					    String path = "File:" + imagesDir.getAbsolutePath() + "//" + "blank.png";					
 						Image thumbnailImg = new Image(path);
 						thumbnail.setFill(new ImagePattern(thumbnailImg));
 					 }
 					 else {
-					    String path = "File:" + imagesDir.getAbsolutePath() + "\\" + fileName;					
+					    String path = "File:" + imagesDir.getAbsolutePath() + "//" + fileName;					
 						Image thumbnailImg = new Image(path);
 						thumbnail.setFill(new ImagePattern(thumbnailImg));
 					 }								    				    						
